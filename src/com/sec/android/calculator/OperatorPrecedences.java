@@ -25,5 +25,6 @@ public class OperatorPrecedences {
         OPERATORS.put("*", new DetailedInfo(2, LEFT_ASSOCIATIVITY));
         OPERATORS.put("/", new DetailedInfo(2, LEFT_ASSOCIATIVITY));
         OPERATORS.put("^", new DetailedInfo(3, RIGHT_ASSOCIATIVITY));
+        OPERATORS.put("%", new DetailedInfo(4, RIGHT_ASSOCIATIVITY));
     }
 }

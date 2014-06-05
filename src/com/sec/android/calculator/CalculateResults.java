@@ -33,6 +33,15 @@ public class CalculateResults {
                     case "^":
                         result = Math.pow(num1, num2);
                         break;
+                    case "%":
+                        result = (num1 * num2) / 100;
+                        break;
+                    case "sin":
+                        result = Math.sin(num1);
+                        break;
+                    case "cos":
+                        result = Math.cos(num1);
+                        break;
                 }
                 tempStack.push(String.valueOf(result));
             }

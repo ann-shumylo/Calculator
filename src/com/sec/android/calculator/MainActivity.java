@@ -52,12 +52,24 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_eight).setOnClickListener(this);
         findViewById(R.id.btn_nine).setOnClickListener(this);
         findViewById(R.id.btn_zero).setOnClickListener(this);
-        findViewById(R.id.btn_equal).setOnClickListener(this);
         findViewById(R.id.btn_addition).setOnClickListener(this);
         findViewById(R.id.btn_subtraction).setOnClickListener(this);
         findViewById(R.id.btn_division).setOnClickListener(this);
-        findViewById(R.id.btn_power).setOnClickListener(this);
         findViewById(R.id.btn_multiplication).setOnClickListener(this);
+        findViewById(R.id.btn_power).setOnClickListener(this);
+        findViewById(R.id.btn_sin).setOnClickListener(this);
+        findViewById(R.id.btn_cos).setOnClickListener(this);
+        findViewById(R.id.btn_percent).setOnClickListener(this);
+        findViewById(R.id.btn_equal).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkBrackets();
+                showResult.setText("" + getDisplayedString() + "=" +
+                        numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+                inputString.setText(numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+                setCursorToTheEnd();
+            }
+        });
         findViewById(R.id.btn_clear).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +150,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.btn_power:
                 addOperand("^");
                 break;
+            case R.id.btn_sin:
+                addOperand("sin(");
+                break;
+            case R.id.btn_cos:
+                addOperand("cos(");
+                break;
+            case R.id.btn_percent:
+                addOperand("%");
+                break;
             case R.id.btn_addition:
                 addOperand("+");
                 break;
@@ -149,12 +170,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_multiplication:
                 addOperand("*");
-                break;
-            case R.id.btn_equal:
-                checkBrackets();
-                showResult.setText("" + getDisplayedString() + "=" +
-                        numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-                inputString.setText(numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
                 break;
             default:
                 break;
@@ -194,7 +209,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private List<String> getListOfNumbersAndSignsFromString() {
         List<String> myList = new ArrayList<>();
-        StringTokenizer check = new StringTokenizer(getDisplayedString(), "+/-*)(^", true);
+        StringTokenizer check = new StringTokenizer(getDisplayedString(), "+/-*)(^%", true);
         while (check.hasMoreTokens()) {
             myList.add(check.nextToken());
         }
