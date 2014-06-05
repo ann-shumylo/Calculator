@@ -3,7 +3,7 @@ package com.sec.android.calculator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.*;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,9 +39,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 hideSoftKeyboard();
             }
         });
-        btnOpenBracket.setOnClickListener(this);
-        btnCloseBracket.setOnClickListener(this);
-        btnPoint.setOnClickListener(this);
         findViewById(R.id.btn_one).setOnClickListener(this);
         findViewById(R.id.btn_two).setOnClickListener(this);
         findViewById(R.id.btn_three).setOnClickListener(this);
@@ -60,6 +57,39 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_sin).setOnClickListener(this);
         findViewById(R.id.btn_cos).setOnClickListener(this);
         findViewById(R.id.btn_percent).setOnClickListener(this);
+        btnOpenBracket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputString.setText(getDisplayedString() + "(");
+                btnCloseBracket.setEnabled(false);
+                btnPoint.setEnabled(false);
+                setCursorToTheEnd();
+            }
+        });
+        btnCloseBracket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputString.setText(getDisplayedString() + ")");
+                btnOpenBracket.setEnabled(false);
+                setEnabledToNumbers(false);
+                btnPoint.setEnabled(false);
+                setEnabledToOperands(true);
+                checkBrackets();
+                setCursorToTheEnd();
+            }
+        });
+        btnPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputString.setText(getDisplayedString() + ".");
+                setEnabledToOperands(false);
+                btnOpenBracket.setEnabled(false);
+                btnCloseBracket.setEnabled(false);
+                btnPoint.setEnabled(false);
+                isPointNeeded = false;
+                setCursorToTheEnd();
+            }
+        });
         findViewById(R.id.btn_equal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,27 +155,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_zero:
                 addNumber(0);
-                break;
-            case R.id.btn_point:
-                inputString.setText(getDisplayedString() + ".");
-                setEnabledToOperands(false);
-                btnOpenBracket.setEnabled(false);
-                btnCloseBracket.setEnabled(false);
-                btnPoint.setEnabled(false);
-                isPointNeeded = false;
-                break;
-            case R.id.btn_open_bracket:
-                inputString.setText(getDisplayedString() + "(");
-                btnCloseBracket.setEnabled(false);
-                btnPoint.setEnabled(false);
-                break;
-            case R.id.btn_close_bracket:
-                inputString.setText(getDisplayedString() + ")");
-                btnOpenBracket.setEnabled(false);
-                setEnabledToNumbers(false);
-                btnPoint.setEnabled(false);
-                setEnabledToOperands(true);
-                checkBrackets();
                 break;
             case R.id.btn_power:
                 addOperand("^");
