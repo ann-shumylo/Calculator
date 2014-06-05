@@ -19,7 +19,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private EditText inputString;
     private TextView showResult;
     private Button btnOpenBracket;
-    private Button btnOloseBracket;
+    private Button btnCloseBracket;
     private Button btnPoint;
 
     @Override
@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         inputString = (EditText) findViewById(R.id.first_number);
         showResult = (TextView) findViewById(R.id.show_result);
         btnOpenBracket = (Button) findViewById(R.id.btn_open_bracket);
-        btnOloseBracket = (Button) findViewById(R.id.btn_close_bracket);
+        btnCloseBracket = (Button) findViewById(R.id.btn_close_bracket);
         btnPoint = (Button) findViewById(R.id.btn_point);
 
         inputString.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         });
         btnOpenBracket.setOnClickListener(this);
-        btnOloseBracket.setOnClickListener(this);
+        btnCloseBracket.setOnClickListener(this);
         btnPoint.setOnClickListener(this);
         findViewById(R.id.btn_one).setOnClickListener(this);
         findViewById(R.id.btn_two).setOnClickListener(this);
@@ -115,13 +115,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 inputString.setText(getDisplayedString() + ".");
                 setEnabledToOperands(false);
                 btnOpenBracket.setEnabled(false);
-                btnOloseBracket.setEnabled(false);
+                btnCloseBracket.setEnabled(false);
                 btnPoint.setEnabled(false);
                 isPointNeeded = false;
                 break;
             case R.id.btn_open_bracket:
                 inputString.setText(getDisplayedString() + "(");
-                btnOloseBracket.setEnabled(false);
+                btnCloseBracket.setEnabled(false);
                 btnPoint.setEnabled(false);
                 break;
             case R.id.btn_close_bracket:
@@ -166,7 +166,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setEnabledToOperands(false);
         setEnabledToNumbers(true);
         btnOpenBracket.setEnabled(true);
-        btnOloseBracket.setEnabled(false);
+        btnCloseBracket.setEnabled(false);
         findViewById(R.id.btn_backspace).setEnabled(true);
 
         isPointNeeded = true;
@@ -236,7 +236,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             btnPoint.setEnabled(false);
             setEnabledToOperands(false);
             setEnabledToNumbers(true);
-            btnOloseBracket.setEnabled(false);
+            btnCloseBracket.setEnabled(false);
             btnOpenBracket.setEnabled(true);
             findViewById(R.id.btn_backspace).setEnabled(false);
             findViewById(R.id.btn_equal).setEnabled(false);
@@ -258,17 +258,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         if (countOpen > 0) {
             if (countOpen > countClose) {
-                btnOloseBracket.setEnabled(true);
+                btnCloseBracket.setEnabled(true);
                 findViewById(R.id.btn_equal).setEnabled(false);
-            }
-            if (countOpen == countClose) {
-                btnOloseBracket.setEnabled(false);
+            } else if (countOpen == countClose) {
+                btnCloseBracket.setEnabled(false);
             }
         }
     }
 
     private void setEnabledToPoint() {
-        if(isPointNeeded) {
+        if (isPointNeeded) {
             btnPoint.setEnabled(true);
         } else {
             btnPoint.setEnabled(false);
