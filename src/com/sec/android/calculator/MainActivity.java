@@ -3,7 +3,7 @@ package com.sec.android.calculator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
+import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,6 +75,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 isInputStringEmpty();
             }
         });
+        inputString.setLongClickable(false);
+        inputString.setTextIsSelectable(false);
         isInputStringEmpty();
     }
 
