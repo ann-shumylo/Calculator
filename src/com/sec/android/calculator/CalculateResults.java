@@ -12,10 +12,10 @@ public class CalculateResults {
             if (!ParseMathString.isOperator(token)) {
                 tempStack.push(token);
             } else {
-                Double num1 = Double.valueOf(tempStack.pop());
-                Double num2 = null;
+                Double num2 = Double.valueOf(tempStack.pop());
+                Double num1 = null;
                 if(!token.equals("s") && !token.equals("c")) {
-                    num2 = Double.valueOf(tempStack.pop());
+                    num1 = Double.valueOf(tempStack.pop());
                 }
 
                 double result = 0;
@@ -40,10 +40,10 @@ public class CalculateResults {
                         result = (num1 * num2) / 100;
                         break;
                     case "s":
-                        result = Math.sin(num1);
+                        result = Math.sin(num2);
                         break;
                     case "c":
-                        result = Math.cos(num1);
+                        result = Math.cos(num2);
                         break;
                 }
                 tempStack.push(String.valueOf(result));

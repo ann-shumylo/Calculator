@@ -98,6 +98,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
                 inputString.setText(numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
                 setCursorToTheEnd();
+                findViewById(R.id.btn_equal).setEnabled(false);
             }
         });
         findViewById(R.id.btn_clear).setOnClickListener(new View.OnClickListener() {
@@ -161,9 +162,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_sin:
                 addOperand("sin");
+                findViewById(R.id.btn_sin).setEnabled(false);
                 break;
             case R.id.btn_cos:
                 addOperand("cos");
+                findViewById(R.id.btn_cos).setEnabled(false);
                 break;
             case R.id.btn_percent:
                 addOperand("%");
@@ -198,6 +201,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btnOpenBracket.setEnabled(true);
         btnCloseBracket.setEnabled(false);
         findViewById(R.id.btn_backspace).setEnabled(true);
+        findViewById(R.id.btn_sin).setEnabled(true);
+        findViewById(R.id.btn_sin).setEnabled(true);
 
         isPointNeeded = true;
     }
@@ -247,6 +252,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_subtraction).setEnabled(isEnabled);
         findViewById(R.id.btn_division).setEnabled(isEnabled);
         findViewById(R.id.btn_multiplication).setEnabled(isEnabled);
+        findViewById(R.id.btn_percent).setEnabled(isEnabled);
+        findViewById(R.id.btn_power).setEnabled(isEnabled);
     }
 
     private void setEnabledToNumbers(boolean isEnabled) {
@@ -271,6 +278,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             btnOpenBracket.setEnabled(true);
             findViewById(R.id.btn_backspace).setEnabled(false);
             findViewById(R.id.btn_equal).setEnabled(false);
+            findViewById(R.id.btn_sin).setEnabled(true);
+            findViewById(R.id.btn_cos).setEnabled(true);
             isPointNeeded = true;
         }
     }
