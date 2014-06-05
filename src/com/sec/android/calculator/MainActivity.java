@@ -223,7 +223,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private List<String> getListOfNumbersAndSignsFromString() {
         List<String> myList = new ArrayList<>();
-        String tempStr = getDisplayedString().replace("sin", "s");
+        String tempStr = getDisplayedString().replace("sin(", "s");
         StringTokenizer check = new StringTokenizer(tempStr.replace("cos", "c"), "+/-*)(^%sc", true);
         while (check.hasMoreTokens()) {
             myList.add(check.nextToken());
