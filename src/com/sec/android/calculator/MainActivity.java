@@ -56,6 +56,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_addition).setOnClickListener(this);
         findViewById(R.id.btn_subtraction).setOnClickListener(this);
         findViewById(R.id.btn_division).setOnClickListener(this);
+        findViewById(R.id.btn_power).setOnClickListener(this);
         findViewById(R.id.btn_multiplication).setOnClickListener(this);
         findViewById(R.id.btn_clear).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +135,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 setEnabledToOperands(true);
                 checkBrackets();
                 break;
+            case R.id.btn_power:
+                addOperand("^");
+                break;
             case R.id.btn_addition:
                 addOperand("+");
                 break;
@@ -190,7 +194,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private List<String> getListOfNumbersAndSignsFromString() {
         List<String> myList = new ArrayList<>();
-        StringTokenizer check = new StringTokenizer(getDisplayedString(), "+/-*)(", true);
+        StringTokenizer check = new StringTokenizer(getDisplayedString(), "+/-*)(^", true);
         while (check.hasMoreTokens()) {
             myList.add(check.nextToken());
         }

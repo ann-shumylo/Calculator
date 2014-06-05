@@ -12,10 +12,10 @@ public class CalculateResults {
             if (!ParseMathString.isOperator(token)) {
                 tempStack.push(token);
             } else {
-                Float num2 = Float.valueOf(tempStack.pop());
-                Float num1 = Float.valueOf(tempStack.pop());
+                Double num2 = Double.valueOf(tempStack.pop());
+                Double num1 = Double.valueOf(tempStack.pop());
 
-                Float result = null;
+                double result = 0;
 
                 switch (token) {
                     case "+":
@@ -29,6 +29,9 @@ public class CalculateResults {
                         break;
                     case "/":
                         result = num1 / num2;
+                        break;
+                    case "^":
+                        result = Math.pow(num1, num2);
                         break;
                 }
                 tempStack.push(String.valueOf(result));

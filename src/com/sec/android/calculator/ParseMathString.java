@@ -18,7 +18,10 @@ public class ParseMathString {
         for (String token : list) {
             if (isOperator(token)) {
                 while (!stack.empty() && isOperator(stack.peek())) {
-                    if (OPERATORS.get(token).precedence <= OPERATORS.get(stack.peek()).precedence) {
+                    if ((OPERATORS.get(token).associativity == OperatorPrecedences.LEFT_ASSOCIATIVITY &&
+                            OPERATORS.get(token).precedence <= OPERATORS.get(stack.peek()).precedence) ||
+                            (OPERATORS.get(token).associativity == OperatorPrecedences.RIGHT_ASSOCIATIVITY &&
+                            OPERATORS.get(token).precedence < OPERATORS.get(stack.peek()).precedence)) {
                         output.add(stack.pop());
                         continue;
                     }

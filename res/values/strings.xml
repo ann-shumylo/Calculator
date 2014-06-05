@@ -2,10 +2,6 @@
 <resources>
     <string name="app_name">My calculator</string>
     <string name="equal">=</string>
-    <string name="addition">+</string>
-    <string name="subtraction">-</string>
-    <string name="division">/</string>
-    <string name="multiplication">*</string>
     <string name="clear">Clear</string>
     <string name="no_results">No results</string>
     <string name="left_parenthesis">(</string>
@@ -21,4 +17,13 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
     <string name="zero">0</string>
+    <!--Math operations-->
+    <string name="sin">sin</string>
+    <string name="cos">cos</string>
+    <string name="power">^</string>
+    <string name="percent">%</string>
+    <string name="addition">+</string>
+    <string name="subtraction">-</string>
+    <string name="division">/</string>
+    <string name="multiplication">*</string>
 </resources>
