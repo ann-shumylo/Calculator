@@ -151,10 +151,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 addOperand("^");
                 break;
             case R.id.btn_sin:
-                addOperand("sin(");
+                addOperand("sin");
                 break;
             case R.id.btn_cos:
-                addOperand("cos(");
+                addOperand("cos");
                 break;
             case R.id.btn_percent:
                 addOperand("%");
@@ -209,7 +209,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private List<String> getListOfNumbersAndSignsFromString() {
         List<String> myList = new ArrayList<>();
-        StringTokenizer check = new StringTokenizer(getDisplayedString(), "+/-*)(^%", true);
+        String tempStr = getDisplayedString().replace("sin", "s");
+        StringTokenizer check = new StringTokenizer(tempStr.replace("cos", "c"), "+/-*)(^%sc", true);
         while (check.hasMoreTokens()) {
             myList.add(check.nextToken());
         }
