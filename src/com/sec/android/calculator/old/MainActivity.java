@@ -35,7 +35,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void initElements() {
-        firstNumber = (EditText) findViewById(R.id.first_number);
+        firstNumber = (EditText) findViewById(R.id.input_string);
 //        secondNumber = (EditText) findViewById(R.id.second_number);
         summation = (Button) findViewById(R.id.btn_addition);
         subtraction = (Button) findViewById(R.id.btn_subtraction);

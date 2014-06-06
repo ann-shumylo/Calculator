@@ -14,7 +14,7 @@
         <EditText
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:id="@+id/first_number"
+                android:id="@+id/input_string"
                 android:layout_width="match_parent"
                 android:gravity="right"
                 android:inputType="text"
