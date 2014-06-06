@@ -23,6 +23,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private Button btnOpenBracket;
     private Button btnCloseBracket;
     private Button btnPoint;
+    private Button btnEqual;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btnOpenBracket = (Button) findViewById(R.id.btn_open_bracket);
         btnCloseBracket = (Button) findViewById(R.id.btn_close_bracket);
         btnPoint = (Button) findViewById(R.id.btn_point);
-        inputString.setOnClickListener(this);
+        btnEqual = (Button) findViewById(R.id.btn_equal);
         findViewById(R.id.btn_one).setOnClickListener(this);
         findViewById(R.id.btn_two).setOnClickListener(this);
         findViewById(R.id.btn_three).setOnClickListener(this);
@@ -53,12 +54,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_sin).setOnClickListener(this);
         findViewById(R.id.btn_cos).setOnClickListener(this);
         findViewById(R.id.btn_percent).setOnClickListener(this);
-        findViewById(R.id.btn_equal).setOnClickListener(this);
         findViewById(R.id.btn_clear).setOnClickListener(this);
-        findViewById(R.id.btn_backspace).setOnClickListener(this);
         btnOpenBracket.setOnClickListener(this);
         btnCloseBracket.setOnClickListener(this);
         btnPoint.setOnClickListener(this);
+        btnEqual.setOnClickListener(this);
+        inputString.setOnClickListener(this);
         inputString.setLongClickable(false);
         inputString.setTextIsSelectable(false);
         isInputStringEmpty();
@@ -66,66 +67,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        // TODO Need rewrite, like to map 
+        if (ActionCodesLinks.BUTTON_ID_TO_DIGIT_CODE_LINK.get(view.getId()) != 0) {
+            addNumber(ActionCodesLinks.BUTTON_ID_TO_DIGIT_CODE_LINK.get(view.getId()));
+        } else if (ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(view.getId()) != null) {
+            addOperand(ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(view.getId()));
+        }
         switch (view.getId()) {
             case R.id.input_string:
                 hideSoftKeyboard();
-                break;
-            case R.id.btn_one:
-                addNumber(1);
-                break;
-            case R.id.btn_two:
-                addNumber(2);
-                break;
-            case R.id.btn_three:
-                addNumber(3);
-                break;
-            case R.id.btn_four:
-                addNumber(4);
-                break;
-            case R.id.btn_five:
-                addNumber(5);
-                break;
-            case R.id.btn_six:
-                addNumber(6);
-                break;
-            case R.id.btn_seven:
-                addNumber(7);
-                break;
-            case R.id.btn_eight:
-                addNumber(8);
-                break;
-            case R.id.btn_nine:
-                addNumber(9);
-                break;
-            case R.id.btn_zero:
-                addNumber(0);
-                break;
-            case R.id.btn_power:
-                addOperand("^");
-                break;
-            case R.id.btn_sin:
-                addOperand("sin");
-                findViewById(R.id.btn_sin).setEnabled(false);
-                break;
-            case R.id.btn_cos:
-                addOperand("cos");
-                findViewById(R.id.btn_cos).setEnabled(false);
-                break;
-            case R.id.btn_percent:
-                addOperand("%");
-                break;
-            case R.id.btn_addition:
-                addOperand("+");
-                break;
-            case R.id.btn_subtraction:
-                addOperand("-");
-                break;
-            case R.id.btn_division:
-                addOperand("/");
-                break;
-            case R.id.btn_multiplication:
-                addOperand("*");
                 break;
             case R.id.btn_open_bracket:
                 inputString.setText(getDisplayedString() + "(");
@@ -138,7 +87,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 setEnabledToNumbers(false);
                 btnPoint.setEnabled(false);
                 setEnabledToOperands(true);
-                checkBrackets();
+                setEnabledToBrackets();
                 break;
             case R.id.btn_point:
                 inputString.setText(getDisplayedString() + ".");
@@ -150,25 +99,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_equal:
                 //TODO Wrong to do this, you should keep state if inputed string by user correct, he can to tap on this button
-                checkBrackets();
-                showResult.setText("" + getDisplayedString() + "=" +
-                        numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-                inputString.setText(numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-                setCursorToTheEnd();
-                // TODO Why do you need this? And create local variable instead of findViewById(R.id.btn_equal)
-                findViewById(R.id.btn_equal).setEnabled(false);
+                setEnabledToBrackets();
+                if (isBracketsValid()) {
+                    showResult.setText("" + getDisplayedString() + "=" +
+                            numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+                    inputString.setText(numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+                    setCursorToTheEnd();
+                }
+                // TODO Why do you need this?
+                btnEqual.setEnabled(false);
                 break;
             case R.id.btn_clear:
                 inputString.setText("");
                 showResult.setText(R.string.no_results);
                 //TODO Not any reason for call method with name isInputStringEmpty, because button name btn_clear
-                isInputStringEmpty();
-                break;
-            case R.id.btn_backspace:
-                int cursorPosition = inputString.getSelectionStart();
-                inputString.getText().delete(cursorPosition - 1, cursorPosition);
-                checkBrackets();
-                setEnabledToPoint();
                 isInputStringEmpty();
                 break;
             default:
@@ -198,10 +142,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private void addNumber(int number) {
         inputString.setText(getDisplayedString() + number);
         setEnabledToOperands(true);
-        btnOpenBracket.setEnabled(false);
-        checkBrackets();
+        setEnabledToBrackets();
         findViewById(R.id.btn_backspace).setEnabled(true);
-
         setEnabledToPoint();
     }
 
@@ -221,7 +163,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     private String numFormat(float floatNum) {
-    	// TODO ?????
+        // TODO ?????
         if (floatNum == (int) floatNum)
             return String.format("%d", (int) floatNum);
         else
@@ -236,7 +178,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void setEnabledToOperands(boolean isEnabled) {
-        findViewById(R.id.btn_equal).setEnabled(isEnabled);
+        btnEqual.setEnabled(isEnabled);
         findViewById(R.id.btn_addition).setEnabled(isEnabled);
         findViewById(R.id.btn_subtraction).setEnabled(isEnabled);
         findViewById(R.id.btn_division).setEnabled(isEnabled);
@@ -267,34 +209,32 @@ public class MainActivity extends Activity implements View.OnClickListener {
             btnCloseBracket.setEnabled(false);
             btnOpenBracket.setEnabled(true);
             findViewById(R.id.btn_backspace).setEnabled(false);
-            findViewById(R.id.btn_equal).setEnabled(false);
+            btnEqual.setEnabled(false);
             findViewById(R.id.btn_sin).setEnabled(true);
             findViewById(R.id.btn_cos).setEnabled(true);
             isPointNeeded = true;
         }
     }
 
-    //TODO Wrong naming of this method. Need re-think logic with brackets
-    private void checkBrackets() {
-        int countOpen = 0;
-        int countClose = 0;
+    private boolean isBracketsValid() {
+        int count = 0;
 
-        //TODO How about if you find "(" count++ if you find ")" count--
         for (String temp : getListOfNumbersAndSignsFromString()) {
             if (temp.contains("(")) {
-                countOpen++;
+                count++;
             } else if (temp.contains(")")) {
-                countClose++;
+                count--;
             }
         }
+        return count == 0;
+    }
 
-        if (countOpen > 0) {
-            if (countOpen > countClose) {
-                btnCloseBracket.setEnabled(true);
-                findViewById(R.id.btn_equal).setEnabled(false);
-            } else if (countOpen == countClose) {
-                btnCloseBracket.setEnabled(false);
-            }
+    private void setEnabledToBrackets() {
+        if (isBracketsValid()) {
+            btnCloseBracket.setEnabled(false);
+        } else {
+            btnCloseBracket.setEnabled(true);
+            btnEqual.setEnabled(false);
         }
     }
 

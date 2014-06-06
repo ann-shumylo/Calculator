@@ -264,7 +264,8 @@
                 android:layout_weight="1"
                 android:text="delete"
                 android:textSize="8pt"
-                android:id="@+id/btn_backspace">
+                android:id="@+id/btn_backspace"
+                android:enabled="false">
         </Button>
         <Button
                 android:layout_height="wrap_content"
