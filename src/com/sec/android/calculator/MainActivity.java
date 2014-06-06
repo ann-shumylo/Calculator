@@ -101,8 +101,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 setEnabledToBrackets();
                 if (isBracketsValid()) {
                     showResult.setText("" + getDisplayedString() + "=" +
-                            numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-                    inputString.setText(numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+                            formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+                    inputString.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
                     setCursorToTheEnd();
                 }
                 // TODO Why do you need this?
@@ -160,12 +160,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
 
-    private String numFormat(float floatNum) {
-        // TODO ?????
-        if (floatNum == (int) floatNum)
-            return String.format("%d", (int) floatNum);
-        else
-            return String.format("%s", floatNum);
+    private String formatStringResult(double doubleNum) {
+        if (doubleNum % 1 == 0) {
+            return String.format("%d", (int) doubleNum);
+        } else {
+            return String.format("%s", doubleNum);
+        }
     }
 
     private void hideSoftKeyboard() {

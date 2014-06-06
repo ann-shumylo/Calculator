@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.example.calculator.R;
+import com.sec.android.calculator.R;
 
 import java.util.LinkedList;
 import java.util.regex.Matcher;
