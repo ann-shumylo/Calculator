@@ -2,7 +2,6 @@ package com.sec.android.calculator;
 
 import android.util.SparseArray;
 import android.util.SparseIntArray;
-import com.example.calculator.R;
 
 public class ActionCodesLinks {
     static final SparseArray<String> BUTTON_ID_TO_OPERATION_CODE_LINK = new SparseArray<>();

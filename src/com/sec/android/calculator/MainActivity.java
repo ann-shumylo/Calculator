@@ -8,7 +8,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.example.calculator.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +61,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         inputString.setOnClickListener(this);
         inputString.setLongClickable(false);
         inputString.setTextIsSelectable(false);
-        isInputStringEmpty();
+        setEnabledStateToButtonsForEmptyString();
     }
 
     @Override
@@ -112,8 +111,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.btn_clear:
                 inputString.setText("");
                 showResult.setText(R.string.no_results);
-                //TODO Not any reason for call method with name isInputStringEmpty, because button name btn_clear
-                isInputStringEmpty();
+                setEnabledStateToButtonsForEmptyString();
                 break;
             default:
                 break;
@@ -200,9 +198,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_zero).setEnabled(isEnabled);
     }
 
-    //TODO if method has name like to isInputStringEmpty so, it should to do only check empty or not
-    private void isInputStringEmpty() {
-        if (TextUtils.isEmpty(inputString.getText().toString())) {
+    private boolean isInputStringEmpty() {
+        return TextUtils.isEmpty(inputString.getText().toString());
+    }
+
+    private void setEnabledStateToButtonsForEmptyString() {
+        if (isInputStringEmpty()) {
             btnPoint.setEnabled(false);
             setEnabledToOperands(false);
             setEnabledToNumbers(true);
