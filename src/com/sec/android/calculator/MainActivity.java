@@ -14,9 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+// TODO Try to use logic like to view with controller
 public class MainActivity extends Activity implements View.OnClickListener {
+    // TODO Need separate this logic from Activity
     private boolean isPointNeeded = true;
     private EditText inputString;
+    //TODO Not need as field
     private TextView showResult;
     private Button btnOpenBracket;
     private Button btnCloseBracket;
@@ -32,7 +35,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btnOpenBracket = (Button) findViewById(R.id.btn_open_bracket);
         btnCloseBracket = (Button) findViewById(R.id.btn_close_bracket);
         btnPoint = (Button) findViewById(R.id.btn_point);
-
+        //TODO Why do you need use inner OnClickListener if your activity implements this interface
         inputString.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +66,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 inputString.setText(getDisplayedString() + "(");
                 btnCloseBracket.setEnabled(false);
                 btnPoint.setEnabled(false);
+                //TODO Why do you need to do this?
                 setCursorToTheEnd();
             }
         });
@@ -93,11 +97,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_equal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            	//TODO Wrong to do this, you should keep state if inputed string by user correct, he can to tap on this button
                 checkBrackets();
                 showResult.setText("" + getDisplayedString() + "=" +
                         numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
                 inputString.setText(numFormat(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
                 setCursorToTheEnd();
+                // TODO Why do you need this? And create local variable instead of findViewById(R.id.btn_equal)
                 findViewById(R.id.btn_equal).setEnabled(false);
             }
         });
@@ -106,6 +112,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             public void onClick(View v) {
                 inputString.setText("");
                 showResult.setText(R.string.no_results);
+                //TODO Not any reason for call method with name isInputStringEmpty, because button name btn_clear
                 isInputStringEmpty();
             }
         });
@@ -126,6 +133,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        // TODO Need rewrite, like to map 
         switch (view.getId()) {
             case R.id.btn_one:
                 addNumber(1);
@@ -222,7 +230,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private List<String> getListOfNumbersAndSignsFromString() {
-        List<String> myList = new ArrayList<>();
+        List<String> myList = new ArrayList<String>();
         String tempStr = getDisplayedString().replace("sin(", "s");
         StringTokenizer check = new StringTokenizer(tempStr.replace("cos", "c"), "+/-*)(^%sc", true);
         while (check.hasMoreTokens()) {
@@ -233,12 +241,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     private String numFormat(float floatNum) {
+    	// TODO ?????
         if (floatNum == (int) floatNum)
             return String.format("%d", (int) floatNum);
         else
             return String.format("%s", floatNum);
     }
 
+    //TODO why modificator is public
     public void hideSoftKeyboard() {
         if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -269,6 +279,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_zero).setEnabled(isEnabled);
     }
 
+    //TODO if method has name like to isInputStringEmpty so, it should to do only check empty or not
     private void isInputStringEmpty() {
         if (TextUtils.isEmpty(inputString.getText().toString())) {
             btnPoint.setEnabled(false);
@@ -284,10 +295,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    //TODO Wrong naming of this method. Need re-think logic with brackets
     private void checkBrackets() {
         int countOpen = 0;
         int countClose = 0;
 
+        //TODO How about if you find "(" count++ if you find ")" count--
         for (String temp : getListOfNumbersAndSignsFromString()) {
             if (temp.contains("(")) {
                 countOpen++;
@@ -306,6 +319,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    //TODO Not clear for understanding
     private void setEnabledToPoint() {
         if (isPointNeeded) {
             btnPoint.setEnabled(true);
