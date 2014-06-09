@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Stack;
 
 public class CalculateResults {
-    //reverse polish notation
-    static float reversePolishNotation(List<String> list) {
-        Stack<String> tempStack = new Stack<>();
+    static double reversePolishNotation(List<String> list) {
+        Stack<String> tempStack = new Stack<String>();
 
         for (String token : ParseMathString.shuntingYardAlgorithm(list)) {
             if (!ParseMathString.isOperator(token)) {
@@ -49,6 +48,6 @@ public class CalculateResults {
                 tempStack.push(String.valueOf(result));
             }
         }
-        return Float.valueOf(tempStack.pop());
+        return Double.valueOf(tempStack.pop());
     }
 }

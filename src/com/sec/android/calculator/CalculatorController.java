@@ -4,21 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 
 class CalculatorController extends LinearLayout implements View.OnClickListener {
     private final CalculatorModel calculatorModel;
     private final CalculatorView calculatorView;
-    private final Activity activity;
 
     public CalculatorController(Activity activity,
                                 final CalculatorModel calculatorModel,
                                 final CalculatorView calculatorView) {
         super(activity);
-        this.activity = activity;
         this.calculatorModel = calculatorModel;
         this.calculatorView = calculatorView;
         LayoutInflater layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

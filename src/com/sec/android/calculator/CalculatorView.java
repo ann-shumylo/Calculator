@@ -2,9 +2,7 @@ package com.sec.android.calculator;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,11 +14,9 @@ import java.util.StringTokenizer;
 class CalculatorView extends LinearLayout {
     private EditText inputString;
     private TextView showResult;
-    private Activity activity;
 
     public CalculatorView(Activity activity) {
         super(activity);
-        this.activity = activity;
         LayoutInflater layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(R.layout.display, this);
         inputString = (EditText) findViewById(R.id.input_string);
