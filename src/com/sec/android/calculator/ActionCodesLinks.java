@@ -3,8 +3,8 @@ package com.sec.android.calculator;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 
-public class ActionCodesLinks {
-    static final SparseArray<String> BUTTON_ID_TO_OPERATION_CODE_LINK = new SparseArray<>();
+class ActionCodesLinks {
+    static final SparseArray<String> BUTTON_ID_TO_OPERATION_CODE_LINK = new SparseArray<String>();
     static final SparseIntArray BUTTON_ID_TO_DIGIT_CODE_LINK = new SparseIntArray();
 
     static {
@@ -16,6 +16,9 @@ public class ActionCodesLinks {
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_percent, "%");
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_sin, "sin");
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_cos, "cos");
+        BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_open_bracket, "(");
+        BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_close_bracket, ")");
+        BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_point, ".");
     }
 
     static {
