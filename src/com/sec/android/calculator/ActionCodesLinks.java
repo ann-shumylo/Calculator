@@ -5,6 +5,7 @@ import android.util.SparseIntArray;
 
 class ActionCodesLinks {
     static final SparseArray<String> BUTTON_ID_TO_OPERATION_CODE_LINK = new SparseArray<String>();
+    static final SparseArray<String> BUTTON_ID_TO_BRACKETS_CODE_LINK = new SparseArray<String>();
     static final SparseIntArray BUTTON_ID_TO_DIGIT_CODE_LINK = new SparseIntArray();
 
     static {
@@ -16,9 +17,12 @@ class ActionCodesLinks {
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_percent, "%");
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_sin, "sin");
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_cos, "cos");
-        BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_open_bracket, "(");
-        BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_close_bracket, ")");
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_point, ".");
+    }
+
+    static {
+        BUTTON_ID_TO_BRACKETS_CODE_LINK.put(R.id.btn_open_bracket, "(");
+        BUTTON_ID_TO_BRACKETS_CODE_LINK.put(R.id.btn_close_bracket, ")");
     }
 
     static {
