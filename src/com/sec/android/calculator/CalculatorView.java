@@ -3,6 +3,8 @@ package com.sec.android.calculator;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,45 +14,55 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 class CalculatorView extends LinearLayout {
-    private EditText inputString;
+    private EditText editText;
     private TextView showResult;
 
     public CalculatorView(Activity activity) {
         super(activity);
         LayoutInflater layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(R.layout.display, this);
-        inputString = (EditText) findViewById(R.id.input_string);
+        editText = (EditText) findViewById(R.id.input_string);
         showResult = (TextView) findViewById(R.id.show_result);
+
+        hideSoftKeyboard();
+
+        editText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSoftKeyboard();
+            }
+        });
+        editText.setLongClickable(false);
     }
 
     public void setInputtedSymbol(String s) {
-        inputString.setText(getDisplayedString() + s);
+        editText.setText(getDisplayedString() + s);
         setCursorToTheEnd();
     }
 
     public void setEmptyView() {
         showResult.setText(R.string.no_results);
-        inputString.setText("");
+        editText.setText("");
     }
 
     public void setResult() {
         showResult.setText("" + getDisplayedString() + "=" +
                 formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-        inputString.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+        editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
         setCursorToTheEnd();
     }
 
     public void setBackspace() {
-        int cursorPosition = inputString.getSelectionStart();
-        inputString.getText().delete(cursorPosition - 1, cursorPosition);
+        int cursorPosition = editText.getSelectionStart();
+        editText.getText().delete(cursorPosition - 1, cursorPosition);
     }
 
     private String getDisplayedString() {
-        return inputString.getText().toString();
+        return editText.getText().toString();
     }
 
     private void setCursorToTheEnd() {
-        inputString.setSelection(inputString.length());
+        editText.setSelection(editText.length());
     }
 
     private String formatStringResult(double doubleNum) {
@@ -70,15 +82,10 @@ class CalculatorView extends LinearLayout {
         }
         return myList;
     }
-//
-//    private void hideSoftKeyboard() {
-//        if (activity.getCurrentFocus() != null) {
-//            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(activity.INPUT_METHOD_SERVICE);
-//            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-//        }
-//    }
-//
-//    private boolean isInputStringEmpty() {
-//        return TextUtils.isEmpty(inputString.getText().toString());
-//    }
+
+    private void hideSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
 }
