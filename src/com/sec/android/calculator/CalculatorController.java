@@ -8,14 +8,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 class CalculatorController extends LinearLayout implements View.OnClickListener {
-    private final CalculatorModel calculatorModel;
     private final CalculatorView calculatorView;
 
-    public CalculatorController(Activity activity,
-                                final CalculatorModel calculatorModel,
-                                final CalculatorView calculatorView) {
+
+    public CalculatorController(Activity activity, final CalculatorView calculatorView) {
         super(activity);
-        this.calculatorModel = calculatorModel;
         this.calculatorView = calculatorView;
         LayoutInflater layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.keyboard, this);
@@ -65,13 +62,16 @@ class CalculatorController extends LinearLayout implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+        String inputSymbol;
+
         if (ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()) != null) {
-            calculatorModel.setOperand(ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()));
-            calculatorView.setInputtedSymbol(calculatorModel.getModel());
+            inputSymbol = ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId());
+            calculatorView.setInputtedSymbol(inputSymbol);
         } else {
-            calculatorModel.setDigit(ActionCodesLinks.BUTTON_ID_TO_DIGIT_CODE_LINK.get(v.getId()));
-            calculatorView.setInputtedSymbol(calculatorModel.getModel());
+            inputSymbol = String.valueOf(ActionCodesLinks.BUTTON_ID_TO_DIGIT_CODE_LINK.get(v.getId()));
+            calculatorView.setInputtedSymbol(inputSymbol);
         }
     }
 }
+
 

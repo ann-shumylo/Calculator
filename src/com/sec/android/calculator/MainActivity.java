@@ -11,9 +11,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        final CalculatorModel calculatorModelModel = new CalculatorModel();
         final CalculatorView calculatorView = new CalculatorView(this);
-        CalculatorController calculatorController = new CalculatorController(this, calculatorModelModel, calculatorView);
+        CalculatorController calculatorController = new CalculatorController(this, calculatorView);
         ViewGroup container = (ViewGroup) findViewById(R.id.mainLayout);
         container.addView(calculatorView);
         container.addView(calculatorController);
