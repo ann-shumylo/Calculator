@@ -1,42 +1,43 @@
 package com.sec.android.calculator;
 
-import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-class CalculatorView extends LinearLayout {
+class CalculatorView implements View.OnClickListener {
+    private final View mParentView;
+    private final Context mContext;
     private EditText editText;
     private TextView showResult;
+    private CalculatorController controller;
 
-    public CalculatorView(Activity activity) {
-        super(activity);
-        LayoutInflater layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        layoutInflater.inflate(R.layout.display, this);
-        editText = (EditText) findViewById(R.id.input_string);
-        showResult = (TextView) findViewById(R.id.show_result);
 
+    public CalculatorView(Context context, View parentView) {
+        mContext = context;
+        mParentView = parentView;
+        initUIComponents();
         hideSoftKeyboard();
+    }
 
-        editText.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideSoftKeyboard();
-            }
-        });
-        editText.setLongClickable(false);
+    public void setListener(CalculatorController controller) {
+        this.controller = controller;
     }
 
     public void setInputtedSymbol(String s) {
         editText.setText(getDisplayedString() + s);
+        setCursorToTheEnd();
+    }
+
+    public void setInputtedDigitSymbol(int digitSymbol) {
+        editText.setText(getDisplayedString() + digitSymbol);
         setCursorToTheEnd();
     }
 
@@ -84,8 +85,73 @@ class CalculatorView extends LinearLayout {
     }
 
     private void hideSoftKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
+    private void initUIComponents() {
+        editText = (EditText) mParentView.findViewById(R.id.input_string);
+        showResult = (TextView) mParentView.findViewById(R.id.show_result);
+        editText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSoftKeyboard();
+            }
+        });
+        editText.setLongClickable(false);
+
+        /*Numbers*/
+        mParentView.findViewById(R.id.btn_one).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_two).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_three).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_four).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_five).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_six).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_seven).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_eight).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_nine).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_zero).setOnClickListener(this);
+        /*Operations*/
+        mParentView.findViewById(R.id.btn_addition).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_subtraction).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_division).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_multiplication).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_power).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_sin).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_cos).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_percent).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_open_bracket).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_close_bracket).setOnClickListener(this);
+        mParentView.findViewById(R.id.btn_point).setOnClickListener(this);
+        /*Equal, Clear, Backspace*/
+        Button btnClear = (Button) mParentView.findViewById(R.id.btn_clear);
+        btnClear.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                controller.onClearBtnClicked();
+
+            }
+        });
+        Button btnEqual = (Button) mParentView.findViewById(R.id.btn_equal);
+        btnEqual.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                controller.onEqualBtnClicked();
+            }
+        });
+        Button btnBackspace = (Button) mParentView.findViewById(R.id.btn_backspace);
+        btnBackspace.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                controller.onBackspaceBtnClicked();
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()) != null) {
+            controller.onOperationBtnClicked(ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()));
+        } else {
+            controller.onDigitBtnClicked(ActionCodesLinks.BUTTON_ID_TO_DIGIT_CODE_LINK.get(v.getId()));
+        }
+
+    }
 }
