@@ -6,7 +6,7 @@ import java.util.Map;
 public class OperatorPrecedences {
     static final int LEFT_ASSOCIATIVITY = 0;
     static final int RIGHT_ASSOCIATIVITY = 1;
-    static final Map<String, DetailedInfo> OPERATORS = new HashMap<>();
+    public static final Map<String, DetailedInfo> OPERATORS = new HashMap<>();
 
     public static class DetailedInfo {
         int precedence;

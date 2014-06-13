@@ -1,12 +1,15 @@
 package com.sec.android.calculator;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.sec.android.calculator.utils.ListValidationHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,45 +20,52 @@ class CalculatorView implements View.OnClickListener {
     private final Context mContext;
     private EditText editText;
     private TextView showResult;
-    private CalculatorController controller;
-
 
     public CalculatorView(Context context, View parentView) {
         mContext = context;
         mParentView = parentView;
+
         initUIComponents();
+        editText.addTextChangedListener(new TextWatcherImplementation(editText));
+
         hideSoftKeyboard();
     }
 
-    public void setListener(CalculatorController controller) {
-        this.controller = controller;
+    void setInputtedSymbol(String s) {
+        int cursorPosition = editText.getSelectionStart();
+        editText.getText().insert(cursorPosition, s);
     }
 
-    public void setInputtedSymbol(String s) {
-        editText.setText(getDisplayedString() + s);
-        setCursorToTheEnd();
-    }
-
-    public void setInputtedDigitSymbol(int digitSymbol) {
-        editText.setText(getDisplayedString() + digitSymbol);
-        setCursorToTheEnd();
-    }
-
-    public void setEmptyView() {
+    void setEmptyView() {
         showResult.setText(R.string.no_results);
         editText.setText("");
     }
 
-    public void setResult() {
-        showResult.setText("" + getDisplayedString() + "=" +
-                formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-        editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-        setCursorToTheEnd();
+    void setResult() {
+        if(ListValidationHelper.isListValid(mContext, getListOfNumbersAndSignsFromString())) {
+            showResult.setText("" + getDisplayedString() + "=" +
+                    formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+            editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+            setCursorToTheEnd();
+        } else {
+           showToastPopup(mContext);
+        }
     }
 
-    public void setBackspace() {
+    private void showToastPopup(Context context) {
+        int duration = Toast.LENGTH_SHORT;
+        String text = "Invalid input string";
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    void setBackspace() {
         int cursorPosition = editText.getSelectionStart();
         editText.getText().delete(cursorPosition - 1, cursorPosition);
+    }
+
+    boolean isEditTextEmpty() {
+        return TextUtils.isEmpty(editText.getText().toString());
     }
 
     private String getDisplayedString() {
@@ -99,7 +109,6 @@ class CalculatorView implements View.OnClickListener {
             }
         });
         editText.setLongClickable(false);
-
         /*Numbers*/
         mParentView.findViewById(R.id.btn_one).setOnClickListener(this);
         mParentView.findViewById(R.id.btn_two).setOnClickListener(this);
@@ -127,20 +136,21 @@ class CalculatorView implements View.OnClickListener {
         Button btnClear = (Button) mParentView.findViewById(R.id.btn_clear);
         btnClear.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                controller.onClearBtnClicked();
-
+                setEmptyView();
             }
         });
         Button btnEqual = (Button) mParentView.findViewById(R.id.btn_equal);
         btnEqual.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                controller.onEqualBtnClicked();
+                if (!isEditTextEmpty()) {
+                    setResult();
+                }
             }
         });
         Button btnBackspace = (Button) mParentView.findViewById(R.id.btn_backspace);
         btnBackspace.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                controller.onBackspaceBtnClicked();
+                setBackspace();
             }
         });
     }
@@ -148,10 +158,11 @@ class CalculatorView implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()) != null) {
-            controller.onOperationBtnClicked(ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()));
+            setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()));
+        } else if (ActionCodesLinks.BUTTON_ID_TO_BRACKETS_CODE_LINK.get(v.getId()) != null) {
+            setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_BRACKETS_CODE_LINK.get(v.getId()));
         } else {
-            controller.onDigitBtnClicked(ActionCodesLinks.BUTTON_ID_TO_DIGIT_CODE_LINK.get(v.getId()));
+            setInputtedSymbol(String.valueOf(ActionCodesLinks.BUTTON_ID_TO_DIGIT_CODE_LINK.get(v.getId())));
         }
-
     }
 }

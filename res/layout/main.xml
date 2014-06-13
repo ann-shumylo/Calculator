@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:gravity="right"
             android:inputType="text"
-            android:digits="0123456789."
             android:singleLine="true">
         </EditText>
     </LinearLayout>
