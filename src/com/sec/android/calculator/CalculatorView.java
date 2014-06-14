@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.sec.android.calculator.utils.ActionCodesLinks;
 import com.sec.android.calculator.utils.ListValidationHelper;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ class CalculatorView implements View.OnClickListener {
 
     private List<String> getListOfNumbersAndSignsFromString() {
         List<String> myList = new ArrayList<String>();
-        String tempStr = getDisplayedString().replace("sin(", "s");
+        String tempStr = getDisplayedString().replace("sin", "s");
         StringTokenizer check = new StringTokenizer(tempStr.replace("cos", "c"), "+/-*)(^%sc", true);
         while (check.hasMoreTokens()) {
             myList.add(check.nextToken());
@@ -150,7 +151,9 @@ class CalculatorView implements View.OnClickListener {
         Button btnBackspace = (Button) mParentView.findViewById(R.id.btn_backspace);
         btnBackspace.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                setBackspace();
+                if(!isEditTextEmpty()) {
+                    setBackspace();
+                }
             }
         });
     }

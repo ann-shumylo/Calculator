@@ -1,10 +1,12 @@
 package com.sec.android.calculator;
 
+import com.sec.android.calculator.utils.OperatorPrecedences;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import static com.sec.android.calculator.OperatorPrecedences.OPERATORS;
+import static com.sec.android.calculator.utils.OperatorPrecedences.OPERATORS;
 
 public class CalculateResults {
 

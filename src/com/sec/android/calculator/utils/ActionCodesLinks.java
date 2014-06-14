@@ -1,12 +1,13 @@
-package com.sec.android.calculator;
+package com.sec.android.calculator.utils;
 
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+import com.sec.android.calculator.R;
 
-class ActionCodesLinks {
-    static final SparseArray<String> BUTTON_ID_TO_OPERATION_CODE_LINK = new SparseArray<String>();
-    static final SparseArray<String> BUTTON_ID_TO_BRACKETS_CODE_LINK = new SparseArray<String>();
-    static final SparseIntArray BUTTON_ID_TO_DIGIT_CODE_LINK = new SparseIntArray();
+public class ActionCodesLinks {
+    public static final SparseArray<String> BUTTON_ID_TO_OPERATION_CODE_LINK = new SparseArray<String>();
+    public static final SparseArray<String> BUTTON_ID_TO_BRACKETS_CODE_LINK = new SparseArray<String>();
+    public static final SparseIntArray BUTTON_ID_TO_DIGIT_CODE_LINK = new SparseIntArray();
 
     static {
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_addition, "+");

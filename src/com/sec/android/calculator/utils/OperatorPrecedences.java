@@ -1,16 +1,16 @@
-package com.sec.android.calculator;
+package com.sec.android.calculator.utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class OperatorPrecedences {
-    static final int LEFT_ASSOCIATIVITY = 0;
-    static final int RIGHT_ASSOCIATIVITY = 1;
+    public static final int LEFT_ASSOCIATIVITY = 0;
+    public static final int RIGHT_ASSOCIATIVITY = 1;
     public static final Map<String, DetailedInfo> OPERATORS = new HashMap<>();
 
     public static class DetailedInfo {
-        int precedence;
-        int associativity;
+        public final int precedence;
+        public final int associativity;
 
         public DetailedInfo(int precedence, int associativity) {
             this.precedence = precedence;
