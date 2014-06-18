@@ -45,13 +45,14 @@ class CalculatorView implements View.OnClickListener {
     }
 
     void setResult() {
-        if(ListValidationHelper.isListValid(mContext, getListOfNumbersAndSignsFromString())) {
+        if (ListValidationHelper.isListValid(getListOfNumbersAndSignsFromString())) {
             showResult.setText("" + getDisplayedString() + "=" +
                     formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
             editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
             setCursorToTheEnd();
+
         } else {
-           showToastPopup(mContext);
+            showToastPopup(mContext);
         }
     }
 
@@ -64,7 +65,9 @@ class CalculatorView implements View.OnClickListener {
 
     void setBackspace() {
         int cursorPosition = editText.getSelectionStart();
-        editText.getText().delete(cursorPosition - 1, cursorPosition);
+        if (cursorPosition != 0) {
+            editText.getText().delete(cursorPosition - 1, cursorPosition);
+        }
     }
 
     boolean isEditTextEmpty() {
@@ -153,7 +156,7 @@ class CalculatorView implements View.OnClickListener {
         Button btnBackspace = (Button) mParentView.findViewById(R.id.btn_backspace);
         btnBackspace.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                if(!isEditTextEmpty()) {
+                if (!isEditTextEmpty()) {
                     setBackspace();
                 }
             }
@@ -164,8 +167,12 @@ class CalculatorView implements View.OnClickListener {
     public void onClick(View v) {
         if (ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()) != null) {
             setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()));
-        } else if (ActionCodesLinks.BUTTON_ID_TO_BRACKETS_CODE_LINK.get(v.getId()) != null) {
-            setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_BRACKETS_CODE_LINK.get(v.getId()));
+        } else if (ActionCodesLinks.BUTTON_ID_TO_BRACKET_CODE_LINK.get(v.getId()) != null) {
+            setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_BRACKET_CODE_LINK.get(v.getId()));
+        } else if (ActionCodesLinks.BUTTON_ID_TO_POINT_CODE_LINK.get(v.getId()) != null) {
+            setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_POINT_CODE_LINK.get(v.getId()));
+        } else if (ActionCodesLinks.BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.get(v.getId()) != null) {
+            setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.get(v.getId()));
         } else {
             setInputtedSymbol(String.valueOf(ActionCodesLinks.BUTTON_ID_TO_DIGIT_CODE_LINK.get(v.getId())));
         }

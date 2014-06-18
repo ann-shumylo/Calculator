@@ -1,15 +1,13 @@
 package com.sec.android.calculator.utils;
 
-import android.content.Context;
-import android.widget.Toast;
 import com.sec.android.calculator.CalculateResults;
 
 import java.util.List;
 
 public class ListValidationHelper {
 
-    public static boolean isListValid(Context context, List<String> list) {
-        return isBracketsCountValid(context, list) && isInputListCorrect(list);
+    public static boolean isListValid(List<String> list) {
+        return isBracketsCountValid(list) && isInputListCorrect(list) && isDoublesValid(list);
     }
 
     private static boolean isInputListCorrect(List<String> list) {
@@ -24,7 +22,24 @@ public class ListValidationHelper {
         return count == 1;
     }
 
-    private static boolean isBracketsCountValid(Context context, List<String> list) {
+    private static boolean isDoublesValid(List<String> list) {
+        for (String token : CalculateResults.shuntingYardAlgorithm(list)) {
+            if (!CalculateResults.isOperator(token)) {
+                try {
+                    Double.parseDouble(token);
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static boolean isBracketsCountValid(List<String> list) {
+        return countBrackets(list) == 0;
+    }
+
+    private static int countBrackets(List<String> list) {
         int count = 0;
 
         for (String temp : list) {
@@ -34,11 +49,6 @@ public class ListValidationHelper {
                 count--;
             }
         }
-        if (count != 0) {
-            Toast.makeText(context, "Invalid count of brackets", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            return true;
-        }
+        return count;
     }
 }
