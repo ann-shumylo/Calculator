@@ -45,15 +45,10 @@ class CalculatorView implements View.OnClickListener {
     }
 
     void setResult() {
-        if (ListValidationHelper.isListValid(getListOfNumbersAndSignsFromString())) {
-            showResult.setText("" + getDisplayedString() + "=" +
-                    formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-            editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-            setCursorToTheEnd();
-
-        } else {
-            showToastPopup(mContext);
-        }
+        showResult.setText("" + getDisplayedString() + "=" +
+                formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+        editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+        setCursorToTheEnd();
     }
 
     private void showToastPopup(Context context) {
@@ -148,8 +143,10 @@ class CalculatorView implements View.OnClickListener {
         Button btnEqual = (Button) mParentView.findViewById(R.id.btn_equal);
         btnEqual.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                if (!isEditTextEmpty()) {
+                if (!isEditTextEmpty() && ListValidationHelper.isListValid(getListOfNumbersAndSignsFromString())) {
                     setResult();
+                } else {
+                    showToastPopup(mContext);
                 }
             }
         });

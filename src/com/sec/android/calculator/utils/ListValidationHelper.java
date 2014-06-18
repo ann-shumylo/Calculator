@@ -18,6 +18,9 @@ public class ListValidationHelper {
             } else {
                 count--;
             }
+            if(token.contains("s") || token.contains("c")) {
+                count++;
+            }
         }
         return count == 1;
     }
