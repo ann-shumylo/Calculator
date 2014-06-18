@@ -37,6 +37,8 @@
             android:layout_marginTop="3pt"
             android:id="@+id/show_result"
             android:hint="@string/no_results"
+            android:scrollbars = "vertical"
+            android:maxLines="4"
             android:gravity="center_horizontal">
         </TextView>
     </LinearLayout>

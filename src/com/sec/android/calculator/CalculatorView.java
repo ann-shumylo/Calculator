@@ -2,6 +2,7 @@ package com.sec.android.calculator;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -27,14 +28,15 @@ class CalculatorView implements View.OnClickListener {
         mParentView = parentView;
 
         initUIComponents();
-        editText.addTextChangedListener(new TextWatcherImplementation(editText));
+        editText.addTextChangedListener(new TextWatcherImpl(editText));
 
         hideSoftKeyboard();
+        showResult.setMovementMethod(new ScrollingMovementMethod());
     }
 
-    void setInputtedSymbol(String s) {
+    void setInputtedSymbol(String str) {
         int cursorPosition = editText.getSelectionStart();
-        editText.getText().insert(cursorPosition, s);
+        editText.getText().insert(cursorPosition, str);
     }
 
     void setEmptyView() {
