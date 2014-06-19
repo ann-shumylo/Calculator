@@ -3,6 +3,7 @@ package com.sec.android.calculator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import com.sec.android.calculator.mathrules.OperationsLimit;
 import com.sec.android.calculator.mathrules.ProhibitInputOperationAtStart;
 import com.sec.android.calculator.mathrules.ReplaceSecondOperation;
 import com.sec.android.calculator.mathrules.bracketsrules.*;
@@ -24,6 +25,7 @@ public class TextWatcherImpl implements TextWatcher {
     private List<MathRule> getListOfRules() {
         List<MathRule> listRules = new ArrayList<MathRule>();
 
+        listRules.add(new OperationsLimit());
         listRules.add(new ReplaceSecondOperation());
         listRules.add(new ReplaceZeroAtStartOfNumber());
         listRules.add(new ProhibitInputOperationAtStart());
