@@ -7,6 +7,9 @@ import com.sec.android.calculator.mathrules.OperationsLimit;
 import com.sec.android.calculator.mathrules.ProhibitInputOperationAtStart;
 import com.sec.android.calculator.mathrules.ReplaceSecondOperation;
 import com.sec.android.calculator.mathrules.bracketsrules.*;
+import com.sec.android.calculator.mathrules.functionsrules.InsertAfterFunction;
+import com.sec.android.calculator.mathrules.functionsrules.InsertFunction;
+import com.sec.android.calculator.mathrules.functionsrules.RemoveFunction;
 import com.sec.android.calculator.mathrules.pointrules.AddZeroBeforePoint;
 import com.sec.android.calculator.mathrules.pointrules.ValidatePointInNumber;
 import com.sec.android.calculator.mathrules.zerorules.ReplaceZeroAtStartOfNumber;
@@ -39,6 +42,10 @@ public class TextWatcherImpl implements TextWatcher {
         //Point
         listRules.add(new ValidatePointInNumber());
         listRules.add(new AddZeroBeforePoint());
+        //Functions
+        listRules.add(new InsertFunction());
+        listRules.add(new InsertAfterFunction());
+        listRules.add(new RemoveFunction());
 
         return listRules;
     }

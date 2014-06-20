@@ -23,6 +23,10 @@ public abstract class BasicRules implements MathRule {
         s.delete(cursorPosition - 1, cursorPosition);
     }
 
+    protected void prohibitLiteralSymbolInput(Editable s, int cursorPosition) {
+        s.delete(cursorPosition - 3, cursorPosition);
+    }
+
     protected void removeExistedSymbol(Editable s, int cursorPosition) {
         s.delete(cursorPosition - 2, cursorPosition - 1);
     }
@@ -43,8 +47,8 @@ public abstract class BasicRules implements MathRule {
         return ActionCodesLinks.isPoint(String.valueOf(s.charAt(cursorPosition - shift)));
     }
 
-    protected boolean isDesiredCharLiteralOperator(Editable s, int cursorPosition, int shift) {
-        return ActionCodesLinks.isLiteralOperator(String.valueOf(s.charAt(cursorPosition - shift)));
+    protected boolean isDesiredCharFunction(Editable s, int cursorPosition) {
+        return ActionCodesLinks.isFunction(String.valueOf(s.subSequence(cursorPosition - 3, cursorPosition)));
     }
-    
+
 }

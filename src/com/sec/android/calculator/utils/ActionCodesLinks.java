@@ -21,8 +21,8 @@ public class ActionCodesLinks {
     }
 
     static {
-        BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.put(R.id.btn_sin, "sin(");
-        BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.put(R.id.btn_cos, "cos(");
+        BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.put(R.id.btn_sin, "sin");
+        BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.put(R.id.btn_cos, "cos");
     }
 
     static {
@@ -56,9 +56,9 @@ public class ActionCodesLinks {
         return false;
     }
 
-    public static boolean isLiteralOperator(String str) {
-        for (int i = 0; i < ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.size(); i++) {
-            if (ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.valueAt(i).equals(str)) {
+    public static boolean isFunction(String str) {
+        for (int i = 0; i < ActionCodesLinks.BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.size(); i++) {
+            if (ActionCodesLinks.BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.valueAt(i).equals(str)) {
                 return true;
             }
         }
