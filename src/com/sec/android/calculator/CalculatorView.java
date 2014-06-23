@@ -28,10 +28,25 @@ class CalculatorView implements View.OnClickListener {
         mParentView = parentView;
 
         initUIComponents();
-        editText.addTextChangedListener(new TextWatcherImpl(editText));
 
-        hideSoftKeyboard();
+        editText.addTextChangedListener(new TextWatcherImpl(editText));
         showResult.setMovementMethod(new ScrollingMovementMethod());
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSoftKeyboard();
+                editText.clearFocus();
+            }
+        });
+
+        editText.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+
     }
 
     void setInputtedSymbol(String str) {

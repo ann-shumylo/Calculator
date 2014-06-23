@@ -11,7 +11,7 @@
             android:allowBackup="true">
         <activity android:name="com.sec.android.calculator.MainActivity"
                   android:label="@string/app_name"
-                  android:windowSoftInputMode="stateAlwaysHidden"
+                  android:windowSoftInputMode="stateHidden|adjustPan"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
