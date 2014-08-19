@@ -13,23 +13,7 @@
         <Button
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_weight="4"
-                android:text="@string/clear"
-                android:textSize="8pt"
-                android:id="@+id/btn_clear">
-        </Button>
-        <Button
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="4"
-                android:text="@string/equal"
-                android:textSize="8pt"
-                android:id="@+id/btn_equal">
-        </Button>
-        <Button
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="1"
                 android:text="@string/left_parenthesis"
                 android:textSize="8pt"
                 android:id="@+id/btn_open_bracket">
@@ -37,7 +21,7 @@
         <Button
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="1"
                 android:text="@string/right_parenthesis"
                 android:textSize="8pt"
                 android:id="@+id/btn_close_bracket">
@@ -225,9 +209,9 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:text="delete"
+                android:text="@string/equal"
                 android:textSize="8pt"
-                android:id="@+id/btn_backspace">
+                android:id="@+id/btn_equal">
         </Button>
         <Button
                 android:layout_height="wrap_content"

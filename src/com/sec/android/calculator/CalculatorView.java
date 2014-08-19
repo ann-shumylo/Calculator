@@ -6,10 +6,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.sec.android.calculator.utils.ActionCodesLinks;
 import com.sec.android.calculator.utils.ListValidationHelper;
 
@@ -47,6 +44,12 @@ class CalculatorView implements View.OnClickListener {
             }
         });
 
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideSoftKeyboard();
+            }
+        });
     }
 
     void setInputtedSymbol(String str) {
@@ -64,6 +67,7 @@ class CalculatorView implements View.OnClickListener {
                 formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
         editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
         setCursorToTheEnd();
+
     }
 
     private void showToastPopup(Context context) {
@@ -148,11 +152,20 @@ class CalculatorView implements View.OnClickListener {
         mParentView.findViewById(R.id.btn_open_bracket).setOnClickListener(this);
         mParentView.findViewById(R.id.btn_close_bracket).setOnClickListener(this);
         mParentView.findViewById(R.id.btn_point).setOnClickListener(this);
-        /*Equal, Clear, Backspace*/
+        /*Equal, Clear*/
         Button btnClear = (Button) mParentView.findViewById(R.id.btn_clear);
         btnClear.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
+                if (!isEditTextEmpty()) {
+                    setBackspace();
+                }
+            }
+        });
+        btnClear.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
                 setEmptyView();
+                return false;
             }
         });
         Button btnEqual = (Button) mParentView.findViewById(R.id.btn_equal);
@@ -162,14 +175,6 @@ class CalculatorView implements View.OnClickListener {
                     setResult();
                 } else {
                     showToastPopup(mContext);
-                }
-            }
-        });
-        Button btnBackspace = (Button) mParentView.findViewById(R.id.btn_backspace);
-        btnBackspace.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                if (!isEditTextEmpty()) {
-                    setBackspace();
                 }
             }
         });

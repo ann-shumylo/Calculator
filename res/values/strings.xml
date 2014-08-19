@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">My calculator</string>
     <string name="equal">=</string>
-    <string name="clear">Clear</string>
+    <string name="delete">DELETE</string>
     <string name="no_results">No results</string>
     <string name="left_parenthesis">(</string>
     <string name="right_parenthesis">)</string>
