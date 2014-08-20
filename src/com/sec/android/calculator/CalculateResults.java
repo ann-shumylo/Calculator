@@ -10,7 +10,7 @@ import static com.sec.android.calculator.utils.OperatorPrecedences.OPERATORS;
 
 public class CalculateResults {
 
-    static double reversePolishNotation(List<String> list) {
+    public static double reversePolishNotation(List<String> list) {
         Stack<String> tempStack = new Stack<String>();
 
         for (String token : shuntingYardAlgorithm(list)) {

@@ -6,18 +6,22 @@ import com.sec.android.calculator.R;
 
 public class ActionCodesLinks {
     public static final SparseArray<String> BUTTON_ID_TO_OPERATION_CODE_LINK = new SparseArray<String>();
+    public static final SparseArray<String> BUTTON_ID_TO_BASIC_OPERATIONS_CODE_LINK = new SparseArray<String>();
     public static final SparseArray<String> BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK = new SparseArray<String>();
     public static final SparseArray<String> BUTTON_ID_TO_BRACKET_CODE_LINK = new SparseArray<String>();
     public static final SparseArray<String> BUTTON_ID_TO_POINT_CODE_LINK = new SparseArray<String>();
     public static final SparseIntArray BUTTON_ID_TO_DIGIT_CODE_LINK = new SparseIntArray();
 
     static {
-        BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_addition, "+");
-        BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_subtraction, "-");
-        BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_division, "/");
-        BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_multiplication, "*");
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_power, "^");
         BUTTON_ID_TO_OPERATION_CODE_LINK.put(R.id.btn_percent, "%");
+    }
+
+    static {
+        BUTTON_ID_TO_BASIC_OPERATIONS_CODE_LINK.put(R.id.btn_addition, "+");
+        BUTTON_ID_TO_BASIC_OPERATIONS_CODE_LINK.put(R.id.btn_subtraction, "-");
+        BUTTON_ID_TO_BASIC_OPERATIONS_CODE_LINK.put(R.id.btn_division, "/");
+        BUTTON_ID_TO_BASIC_OPERATIONS_CODE_LINK.put(R.id.btn_multiplication, "*");
     }
 
     static {
