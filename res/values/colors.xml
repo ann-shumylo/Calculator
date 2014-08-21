@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="border_color" type="color">#FF656565</item>
+    <item name="background_color_digits_selector" type="color">#F1262525</item>
+    <item name="background_color_operations" type="color">#FF262525</item>
+    <item name="background_color_operations_selector" type="color">#FF353434</item>
+</resources>

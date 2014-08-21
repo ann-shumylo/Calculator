@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Keyboard" parent="@android:style/TextAppearance.Holo.Large">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+    <style name="DigitKeyboard" parent="Keyboard">
+        <item name="android:background">@drawable/keyboard_digit_button_background_selector</item>
+    </style>
+    <style name="OperationsKeyboard" parent="Keyboard">
+        <item name="android:background">@drawable/keyboard_operations_button_background_selector</item>
+    </style>
+</resources>

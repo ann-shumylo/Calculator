@@ -5,66 +5,33 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:id="@+id/additional_keyboard">
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-        <Button
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
+    <LinearLayout style="@style/Keyboard">
+        <Button style="@style/OperationsKeyboard"
                 android:text="@string/left_parenthesis"
-                android:textSize="8pt"
                 android:id="@+id/btn_open_bracket">
         </Button>
-        <Button
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
+        <Button style="@style/OperationsKeyboard"
                 android:text="@string/right_parenthesis"
-                android:textSize="8pt"
                 android:id="@+id/btn_close_bracket">
         </Button>
     </LinearLayout>
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-        <Button
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="4"
+    <LinearLayout style="@style/Keyboard">
+        <Button style="@style/OperationsKeyboard"
                 android:text="@string/sin"
-                android:textSize="8pt"
                 android:id="@+id/btn_sin">
         </Button>
-        <Button
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="4"
+        <Button style="@style/OperationsKeyboard"
                 android:text="@string/cos"
-                android:textSize="8pt"
                 android:id="@+id/btn_cos">
         </Button>
     </LinearLayout>
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-        <Button
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="4"
+    <LinearLayout style="@style/Keyboard">
+        <Button style="@style/OperationsKeyboard"
                 android:text="@string/power"
-                android:textSize="8pt"
                 android:id="@+id/btn_power">
         </Button>
-        <Button
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_weight="4"
+        <Button style="@style/OperationsKeyboard"
                 android:text="@string/percent"
-                android:textSize="8pt"
                 android:id="@+id/btn_percent">
         </Button>
     </LinearLayout>
