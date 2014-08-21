@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,22 +32,19 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
      */
     private ViewPager mPager;
 
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
-    private PagerAdapter mPagerAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
+        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
         editText = (EditText) findViewById(R.id.input_string);
         showResultTextView = (TextView) findViewById(R.id.show_result);
+
+        editText.setInputType(InputType.TYPE_NULL);
 
         Button btnClear = (Button) findViewById(R.id.btn_clear);
         btnClear.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +61,8 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
                 return false;
             }
         });
+        editText.addTextChangedListener(new TextWatcherImpl(editText));
+        showResultTextView.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override
@@ -74,18 +75,6 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
             // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
-    }
-
-    private String formatStringResult(double doubleNum) {
-        if (doubleNum % 1 == 0) {
-            return String.format("%d", (int) doubleNum);
-        } else {
-            return String.format("%s", doubleNum);
-        }
-    }
-
-    private void setCursorToTheEnd(EditText editText) {
-        editText.setSelection(editText.length());
     }
 
     @Override
@@ -105,11 +94,23 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
         }
     }
 
-    public boolean isEditTextEmpty() {
+    private String formatStringResult(double doubleNum) {
+        if (doubleNum % 1 == 0) {
+            return String.format("%d", (int) doubleNum);
+        } else {
+            return String.format("%s", doubleNum);
+        }
+    }
+
+    private void setCursorToTheEnd() {
+        editText.setSelection(editText.length());
+    }
+
+    boolean isEditTextEmpty() {
         return TextUtils.isEmpty(editText.getText().toString());
     }
 
-    public List<String> getListOfNumbersAndSignsFromString() {
+    List<String> getListOfNumbersAndSignsFromString() {
         List<String> myList = new ArrayList<>();
         String tempStr = editText.getText().toString().replace("sin", "s");
         StringTokenizer check = new StringTokenizer(tempStr.replace("cos", "c"), "+/-*)(^%sc", true);
@@ -119,11 +120,11 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
         return myList;
     }
 
-    public void setResult() {
+    void setResult() {
         showResultTextView.setText("" + editText.getText().toString() + "=" +
                 formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
         editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-        setCursorToTheEnd(editText);
+        setCursorToTheEnd();
     }
 
     private void setBackspace() {

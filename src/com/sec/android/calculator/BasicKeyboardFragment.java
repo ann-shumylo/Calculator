@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 import com.sec.android.calculator.utils.ActionCodesLinks;
 import com.sec.android.calculator.utils.InputFieldManager;
-import com.sec.android.calculator.utils.ListValidationHelper;
 
 /**
  * @author Ganna Pliskovska(g.pliskovska@samsung.com)
@@ -48,6 +46,8 @@ public class BasicKeyboardFragment extends Fragment implements View.OnClickListe
         view.findViewById(R.id.btn_subtraction).setOnClickListener(this);
         view.findViewById(R.id.btn_division).setOnClickListener(this);
         view.findViewById(R.id.btn_multiplication).setOnClickListener(this);
+        /*Point*/
+        view.findViewById(R.id.btn_point).setOnClickListener(this);
 
         Button btnEqual = (Button) view.findViewById(R.id.btn_equal);
         btnEqual.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +64,8 @@ public class BasicKeyboardFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (ActionCodesLinks.BUTTON_ID_TO_BASIC_OPERATIONS_CODE_LINK.get(v.getId()) != null) {
-            getParentActivity().setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_BASIC_OPERATIONS_CODE_LINK.get(v.getId()));
+        if (ActionCodesLinks.BUTTON_ID_TO_BASIC_OPERATION_CODE_LINK.get(v.getId()) != null) {
+            getParentActivity().setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_BASIC_OPERATION_CODE_LINK.get(v.getId()));
         } else if (ActionCodesLinks.BUTTON_ID_TO_POINT_CODE_LINK.get(v.getId()) != null) {
             getParentActivity().setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_POINT_CODE_LINK.get(v.getId()));
         } else {

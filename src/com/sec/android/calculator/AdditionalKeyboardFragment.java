@@ -45,8 +45,8 @@ public class AdditionalKeyboardFragment extends Fragment implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        if (ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()) != null) {
-            getParentActivity().setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_OPERATION_CODE_LINK.get(v.getId()));
+        if (ActionCodesLinks.BUTTON_ID_TO_ADDITIONAL_OPERATION_CODE_LINK.get(v.getId()) != null) {
+            getParentActivity().setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_ADDITIONAL_OPERATION_CODE_LINK.get(v.getId()));
         } else if (ActionCodesLinks.BUTTON_ID_TO_BRACKET_CODE_LINK.get(v.getId()) != null) {
             getParentActivity().setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_BRACKET_CODE_LINK.get(v.getId()));
         } else if (ActionCodesLinks.BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.get(v.getId()) != null) {

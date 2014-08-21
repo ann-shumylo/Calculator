@@ -61,16 +61,11 @@ public class TextWatcherImpl implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         String text = s.toString();
-
         if (!text.isEmpty()) {
             for (MathRule rule : getListOfRules()) {
-                rule.applyRule(s, getCursorPosition());
+                rule.applyRule(s, mEditText.getSelectionStart());
             }
         }
-    }
-
-    private int getCursorPosition() {
-        return mEditText.getSelectionStart();
     }
 }
 
