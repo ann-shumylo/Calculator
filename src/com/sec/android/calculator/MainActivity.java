@@ -46,7 +46,7 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
 
         editText.setInputType(InputType.TYPE_NULL);
 
-        Button btnClear = (Button) findViewById(R.id.btn_clear);
+        Button btnClear = (Button) findViewById(R.id.btn_delete);
         btnClear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!isEditTextEmpty()) {
