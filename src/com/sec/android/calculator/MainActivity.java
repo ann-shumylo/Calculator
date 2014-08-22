@@ -122,9 +122,11 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
     }
 
     void setResult() {
-        showResultTextView.setText("" + editText.getText().toString() + "=" +
-                formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-        editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+        if (getListOfNumbersAndSignsFromString().size() > 1) {
+            showResultTextView.setText("" + editText.getText().toString() + "=" +
+                    formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+            editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+        }
         setCursorToTheEnd();
     }
 
