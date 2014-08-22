@@ -8,11 +8,11 @@
     <LinearLayout style="@style/Keyboard">
         <Button style="@style/OperationsKeyboard"
                 android:text="@string/left_parenthesis"
-                android:id="@+id/btn_open_bracket">
+                android:id="@+id/btn_open_parentheses">
         </Button>
         <Button style="@style/OperationsKeyboard"
                 android:text="@string/right_parenthesis"
-                android:id="@+id/btn_close_bracket">
+                android:id="@+id/btn_close_parentheses">
         </Button>
     </LinearLayout>
     <LinearLayout style="@style/Keyboard">

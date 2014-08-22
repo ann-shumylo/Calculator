@@ -96,9 +96,10 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
 
     private String formatStringResult(double doubleNum) {
         if (doubleNum % 1 == 0) {
-            return String.format("%d", (int) doubleNum);
+            String s = String.valueOf(doubleNum);
+            return s.subSequence(0, s.length() - 2).toString();
         } else {
-            return String.format("%s", doubleNum);
+            return String.valueOf(doubleNum);
         }
     }
 

@@ -34,8 +34,8 @@ public class ActionCodesLinks {
     }
 
     static {
-        BUTTON_ID_TO_BRACKET_CODE_LINK.put(R.id.btn_open_bracket, "(");
-        BUTTON_ID_TO_BRACKET_CODE_LINK.put(R.id.btn_close_bracket, ")");
+        BUTTON_ID_TO_BRACKET_CODE_LINK.put(R.id.btn_open_parentheses, "(");
+        BUTTON_ID_TO_BRACKET_CODE_LINK.put(R.id.btn_close_parentheses, ")");
     }
 
     static {

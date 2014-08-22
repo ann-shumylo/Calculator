@@ -37,8 +37,8 @@ public class AdditionalKeyboardFragment extends Fragment implements View.OnClick
         view.findViewById(R.id.btn_sin).setOnClickListener(this);
         view.findViewById(R.id.btn_cos).setOnClickListener(this);
         view.findViewById(R.id.btn_percent).setOnClickListener(this);
-        view.findViewById(R.id.btn_open_bracket).setOnClickListener(this);
-        view.findViewById(R.id.btn_close_bracket).setOnClickListener(this);
+        view.findViewById(R.id.btn_open_parentheses).setOnClickListener(this);
+        view.findViewById(R.id.btn_close_parentheses).setOnClickListener(this);
 
         return view;
     }
