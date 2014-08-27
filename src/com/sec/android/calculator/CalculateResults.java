@@ -2,6 +2,9 @@ package com.sec.android.calculator;
 
 import com.sec.android.calculator.utils.OperatorPrecedences;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -10,51 +13,55 @@ import static com.sec.android.calculator.utils.OperatorPrecedences.OPERATORS;
 
 public class CalculateResults {
 
-    public static double reversePolishNotation(List<String> list) {
-        Stack<String> tempStack = new Stack<String>();
+    private static final int PRECISION = 11;
+
+    public static BigDecimal reversePolishNotation(List<String> list) {
+        Stack<String> tempStack = new Stack<>();
 
         for (String token : shuntingYardAlgorithm(list)) {
             if (!isOperator(token)) {
                 tempStack.push(token);
             } else {
-                Double num2 = Double.valueOf(tempStack.pop());
-                Double num1 = null;
+                BigDecimal num2 = new BigDecimal(tempStack.pop());
+                BigDecimal num1 = BigDecimal.ZERO;
+
                 if (!token.equals("s") && !token.equals("c")) {
-                    num1 = Double.valueOf(tempStack.pop());
+                    num1 = new BigDecimal(tempStack.pop());
                 }
 
-                double result = 0;
+                MathContext mathContext = new MathContext(PRECISION, RoundingMode.HALF_UP);
+                BigDecimal result = BigDecimal.ZERO;
 
                 switch (token) {
                     case "+":
-                        result = num1 + num2;
+                        result = num1.add(num2, mathContext);
                         break;
                     case "-":
-                        result = num1 - num2;
+                        result = num1.subtract(num2, mathContext);
                         break;
                     case "*":
-                        result = num1 * num2;
+                        result = num1.multiply(num2, mathContext);
                         break;
                     case "/":
-                        result = num1 / num2;
+                        result = num1.divide(num2, mathContext);
                         break;
                     case "^":
-                        result = Math.pow(num1, num2);
+                        result = new BigDecimal(Math.pow(num1.doubleValue(), num2.doubleValue()), mathContext);
                         break;
                     case "%":
-                        result = (num1 * num2) / 100;
+                        result = (num1.multiply(num2)).divide(BigDecimal.valueOf(100), mathContext);
                         break;
                     case "s":
-                        result = Math.sin(num2);
+                        result = new BigDecimal(Math.sin(num2.doubleValue()), mathContext);
                         break;
                     case "c":
-                        result = Math.cos(num2);
+                        result = new BigDecimal(Math.cos(num2.doubleValue()), mathContext);
                         break;
                 }
                 tempStack.push(String.valueOf(result));
             }
         }
-        return Double.valueOf(tempStack.pop());
+        return new BigDecimal(tempStack.pop());
     }
 
     public static boolean isOperator(String token) {
@@ -62,8 +69,8 @@ public class CalculateResults {
     }
 
     public static List<String> shuntingYardAlgorithm(List<String> list) {
-        List<String> output = new ArrayList<String>();
-        Stack<String> stack = new Stack<String>();
+        List<String> output = new ArrayList<>();
+        Stack<String> stack = new Stack<>();
 
         for (String token : list) {
             if (isOperator(token)) {

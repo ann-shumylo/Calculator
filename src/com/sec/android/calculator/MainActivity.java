@@ -94,15 +94,6 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
         }
     }
 
-    private String formatStringResult(double doubleNum) {
-        if (doubleNum % 1 == 0) {
-            String s = String.valueOf(doubleNum);
-            return s.subSequence(0, s.length() - 2).toString();
-        } else {
-            return String.valueOf(doubleNum);
-        }
-    }
-
     private void setCursorToTheEnd() {
         editText.setSelection(editText.length());
     }
@@ -124,8 +115,8 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
     void setResult() {
         if (getListOfNumbersAndSignsFromString().size() > 1) {
             showResultTextView.setText("" + editText.getText().toString() + "=" +
-                    formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
-            editText.setText(formatStringResult(CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString())));
+                    CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString()));
+            editText.setText("" + CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString()));
         }
         setCursorToTheEnd();
     }
