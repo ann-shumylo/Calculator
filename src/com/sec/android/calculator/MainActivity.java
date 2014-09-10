@@ -16,9 +16,11 @@ import android.widget.Toast;
 import com.sec.android.calculator.utils.InputFieldManager;
 import com.sec.android.calculator.utils.ListValidationHelper;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Ganna Pliskovska(g.pliskovska@samsung.com)
@@ -49,7 +51,7 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
         Button btnClear = (Button) findViewById(R.id.btn_delete);
         btnClear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (!isEditTextEmpty()) {
+                if (!TextUtils.isEmpty(editText.getText().toString())) {
                     setBackspace();
                 }
             }
@@ -85,8 +87,8 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
 
     @Override
     public void onEqualClicked() {
-        if (!isEditTextEmpty() &&
-                ListValidationHelper.isListValid(getListOfNumbersAndSignsFromString())) {
+        if (!TextUtils.isEmpty(editText.getText().toString()) &&
+                ListValidationHelper.isListValid(parseMathString())) {
             setResult();
         } else {
             String text = "Invalid input string";
@@ -98,25 +100,30 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
         editText.setSelection(editText.length());
     }
 
-    boolean isEditTextEmpty() {
-        return TextUtils.isEmpty(editText.getText().toString());
-    }
-
-    List<String> getListOfNumbersAndSignsFromString() {
+    private List<String> parseMathString() {
         List<String> myList = new ArrayList<>();
-        String tempStr = editText.getText().toString().replace("sin", "s");
-        StringTokenizer check = new StringTokenizer(tempStr.replace("cos", "c"), "+/-*)(^%sc", true);
-        while (check.hasMoreTokens()) {
-            myList.add(check.nextToken());
+        Pattern numberPattern = Pattern.compile("(?:\\d*\\.)?\\d+|[sin]+|[cos]+|\\D");
+        Matcher matcher = numberPattern.matcher(editText.getText().toString());
+
+        while (matcher.find()) {
+            myList.add(matcher.group());
+        }
+
+        for (int i = 0; i < myList.size(); i++) {
+            if (myList.get(i).equals("-") && (i == 0 || myList.get(i - 1).equals("("))) {
+                myList.remove(i);
+                myList.set(i, "-" + myList.get(i));
+            }
         }
         return myList;
     }
 
-    void setResult() {
-        if (getListOfNumbersAndSignsFromString().size() > 1) {
-            showResultTextView.setText("" + editText.getText().toString() + "=" +
-                    CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString()));
-            editText.setText("" + CalculateResults.reversePolishNotation(getListOfNumbersAndSignsFromString()));
+
+    private void setResult() {
+        BigDecimal result = CalculateResults.reversePolishNotation(parseMathString());
+        if (parseMathString().size() > 1) {
+            showResultTextView.setText("" + editText.getText().toString() + "=" + result);
+            editText.setText("" + result);
         }
         setCursorToTheEnd();
     }

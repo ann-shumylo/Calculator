@@ -25,8 +25,8 @@ public class ActionCodesLinks {
     }
 
     static {
-        BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.put(R.id.btn_sin, "sin");
-        BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.put(R.id.btn_cos, "cos");
+        BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.put(R.id.btn_sin, "sin(");
+        BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.put(R.id.btn_cos, "cos(");
     }
 
     static {

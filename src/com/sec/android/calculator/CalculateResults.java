@@ -25,7 +25,7 @@ public class CalculateResults {
                 BigDecimal num2 = new BigDecimal(tempStack.pop());
                 BigDecimal num1 = BigDecimal.ZERO;
 
-                if (!token.equals("s") && !token.equals("c")) {
+                if (!token.equals("sin") && !token.equals("cos")) {
                     num1 = new BigDecimal(tempStack.pop());
                 }
 
@@ -51,10 +51,10 @@ public class CalculateResults {
                     case "%":
                         result = (num1.multiply(num2)).divide(BigDecimal.valueOf(100), mathContext);
                         break;
-                    case "s":
+                    case "sin":
                         result = new BigDecimal(Math.sin(num2.doubleValue()), mathContext);
                         break;
-                    case "c":
+                    case "cos":
                         result = new BigDecimal(Math.cos(num2.doubleValue()), mathContext);
                         break;
                 }
