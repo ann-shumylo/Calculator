@@ -96,6 +96,11 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
         }
     }
 
+    @Override
+    public ViewPager getViewPager() {
+        return mPager;
+    }
+
     private void setCursorToTheEnd() {
         editText.setSelection(editText.length());
     }

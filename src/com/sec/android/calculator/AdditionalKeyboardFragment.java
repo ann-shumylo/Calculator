@@ -52,6 +52,7 @@ public class AdditionalKeyboardFragment extends Fragment implements View.OnClick
         } else if (ActionCodesLinks.BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.get(v.getId()) != null) {
             getParentActivity().setInputtedSymbol(ActionCodesLinks.BUTTON_ID_TO_LITERAL_OPERATION_CODE_LINK.get(v.getId()));
         }
+        getParentActivity().getViewPager().setCurrentItem(0, true);
     }
 
     private InputFieldManager getParentActivity() {
