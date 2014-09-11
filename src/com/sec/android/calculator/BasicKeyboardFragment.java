@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.sec.android.calculator.utils.ActionCodesLinks;
-import com.sec.android.calculator.utils.InputFieldManager;
+import com.sec.android.calculator.interfaces.InputFieldManager;
 
 /**
  * @author Ganna Pliskovska(g.pliskovska@samsung.com)

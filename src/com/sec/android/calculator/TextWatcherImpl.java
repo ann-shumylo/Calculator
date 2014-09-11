@@ -13,7 +13,7 @@ import com.sec.android.calculator.mathrules.functionsrules.RemoveFunction;
 import com.sec.android.calculator.mathrules.pointrules.AddZeroBeforePoint;
 import com.sec.android.calculator.mathrules.pointrules.ValidatePointInNumber;
 import com.sec.android.calculator.mathrules.zerorules.ReplaceZeroAtStartOfNumber;
-import com.sec.android.calculator.utils.MathRule;
+import com.sec.android.calculator.interfaces.MathRule;
 
 import java.util.ArrayList;
 import java.util.List;

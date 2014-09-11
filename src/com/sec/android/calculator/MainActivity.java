@@ -13,7 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.sec.android.calculator.utils.InputFieldManager;
+import com.sec.android.calculator.interfaces.InputFieldManager;
+import com.sec.android.calculator.interfaces.OnCalculationListener;
 import com.sec.android.calculator.utils.ListValidationHelper;
 
 import java.math.BigDecimal;
@@ -85,14 +86,26 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
         editText.getText().insert(cursorPosition, str);
     }
 
+
     @Override
     public void onEqualClicked() {
-        if (!TextUtils.isEmpty(editText.getText().toString()) &&
-                ListValidationHelper.isListValid(parseMathString())) {
-            setResult();
+        if (!TextUtils.isEmpty(editText.getText().toString()) && ListValidationHelper.isListValid(parseMathString())) {
+            CalculateResults.reversePolishNotation(parseMathString(), new OnCalculationListener() {
+                @Override
+                public void onResult(BigDecimal result) {
+                    setResult(result);
+                }
+                @Override
+                public void onCalculationError(int errorType) {
+                    String errorDescription = "Invalid operation.";
+                    if (errorType == OnCalculationListener.ERROR_TYPE_DIVIDE_BY_ZERO) {
+                        errorDescription += "\n" + "Divide by zero";
+                    }
+                    Toast.makeText(getBaseContext(), errorDescription, Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
-            String text = "Invalid input string";
-            Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Invalid input string", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -124,12 +137,9 @@ public class MainActivity extends FragmentActivity implements InputFieldManager 
     }
 
 
-    private void setResult() {
-        BigDecimal result = CalculateResults.reversePolishNotation(parseMathString());
-        if (parseMathString().size() > 1) {
-            showResultTextView.setText("" + editText.getText().toString() + "=" + result);
-            editText.setText("" + result);
-        }
+    private void setResult(BigDecimal result) {
+        showResultTextView.setText("" + editText.getText().toString() + "=" + result);
+        editText.setText("" + result);
         setCursorToTheEnd();
     }
 

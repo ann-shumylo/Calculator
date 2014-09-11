@@ -1,4 +1,4 @@
-package com.sec.android.calculator.utils;
+package com.sec.android.calculator.interfaces;
 
 import android.support.v4.view.ViewPager;
 

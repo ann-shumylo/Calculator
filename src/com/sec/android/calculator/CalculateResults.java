@@ -1,5 +1,6 @@
 package com.sec.android.calculator;
 
+import com.sec.android.calculator.interfaces.OnCalculationListener;
 import com.sec.android.calculator.utils.OperatorPrecedences;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ public class CalculateResults {
 
     private static final int PRECISION = 11;
 
-    public static BigDecimal reversePolishNotation(List<String> list) {
+    public static void reversePolishNotation(List<String> list, OnCalculationListener listener) {
         Stack<String> tempStack = new Stack<>();
 
         for (String token : shuntingYardAlgorithm(list)) {
@@ -43,7 +44,12 @@ public class CalculateResults {
                         result = num1.multiply(num2, mathContext);
                         break;
                     case "/":
-                        result = num1.divide(num2, mathContext);
+                        if (!num2.equals(BigDecimal.ZERO)) {
+                            result = num1.divide(num2, mathContext);
+                        } else {
+                            listener.onCalculationError(OnCalculationListener.ERROR_TYPE_DIVIDE_BY_ZERO);
+                            return;
+                        }
                         break;
                     case "^":
                         result = new BigDecimal(Math.pow(num1.doubleValue(), num2.doubleValue()), mathContext);
@@ -61,7 +67,7 @@ public class CalculateResults {
                 tempStack.push(String.valueOf(result));
             }
         }
-        return new BigDecimal(tempStack.pop());
+        listener.onResult(new BigDecimal(tempStack.pop()));
     }
 
     public static boolean isOperator(String token) {

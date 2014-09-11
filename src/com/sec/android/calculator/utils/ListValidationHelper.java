@@ -7,7 +7,7 @@ import java.util.List;
 public class ListValidationHelper {
 
     public static boolean isListValid(List<String> list) {
-        return isBracketsCountValid(list) && isInputListCorrect(list) && isDoublesValid(list);
+        return isBracketsCountValid(list) && isInputListCorrect(list);
     }
 
     private static boolean isInputListCorrect(List<String> list) {
@@ -18,24 +18,11 @@ public class ListValidationHelper {
             } else {
                 count--;
             }
-            if(token.contains("s") || token.contains("c")) {
+            if (token.contains("sin") || token.contains("cos")) {
                 count++;
             }
         }
         return count == 1;
-    }
-
-    private static boolean isDoublesValid(List<String> list) {
-        for (String token : CalculateResults.shuntingYardAlgorithm(list)) {
-            if (!CalculateResults.isOperator(token)) {
-                try {
-                    Double.parseDouble(token);
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     private static boolean isBracketsCountValid(List<String> list) {

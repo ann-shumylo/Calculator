@@ -1,6 +1,7 @@
 package com.sec.android.calculator.utils;
 
 import android.text.Editable;
+import com.sec.android.calculator.interfaces.MathRule;
 
 /**
  * @author Ganna Pliskovska(g.pliskovska@samsung.com)
